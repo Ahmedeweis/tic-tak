@@ -1,71 +1,115 @@
 <template>
  <div class=" min-h-screen relative bg-gradient-to-br from-[#10151B] via-[#1C2230] to-[#10151B] text-white p-4 pb-0">
     <!-- Header -->
-     <header class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 md:gap-0 text-center md:text-left">
-      <div class="flex items-center space-x-2">
-        <div class="rounded-md flex items-center justify-center">
-          <!-- المربع الكامل 3x3 -->
-          <div
-            class="w-16 h-16 bg-[#283033] grid grid-cols-3 grid-rows-3 gap-1 p-1.5 rounded-lg"
-          >
-            <div class="bg-[#43A1FA] w-full h-full rounded-sm"></div>
-            <div class="bg-[#354748] w-full h-full rounded-sm"></div>
-            <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
-            <div class="bg-[#354748] w-full h-full rounded-sm"></div>
-            <div class="bg-[#43A1FA] w-full h-full rounded-sm"></div>
-            <div class="bg-[#354748] w-full h-full rounded-sm"></div>
-            <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
-            <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
-            <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
-          </div>
-        </div>
-        <div>
-          <h1 class="text-xl font-bold">Tic Tac Toe</h1>
-          <p class="text-sm font-bold text-[#cecece]">(XO) game</p>
-        </div>
+<!-- Header -->
+<header
+  class="flex  justify-between items-start mb-6 gap-4 md:gap-0 text-center md:text-left px-4"
+>
+  <!-- Logo & Title -->
+  <div class="flex items-center  space-x-2">
+    <div class="rounded-md flex items-center justify-center">
+      <!-- المربع الكامل 3x3 -->
+      <div
+        class="w-16 h-16 bg-[#283033] grid grid-cols-3 grid-rows-3 gap-1 p-1.5 rounded-lg"
+      >
+        <div class="bg-[#43A1FA] w-full h-full rounded-sm"></div>
+        <div class="bg-[#354748] w-full h-full rounded-sm"></div>
+        <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
+        <div class="bg-[#354748] w-full h-full rounded-sm"></div>
+        <div class="bg-[#43A1FA] w-full h-full rounded-sm"></div>
+        <div class="bg-[#354748] w-full h-full rounded-sm"></div>
+        <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
+        <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
+        <div class="bg-[#F5455C] w-full h-full rounded-sm"></div>
       </div>
-      <!-- Controls -->
-      <div class="flex space-x-2 items-center justify-center">
-        <button
-          @click="toggleFullscreen"
-          class="px-3 py-3 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors cursor-pointer"
-        >
-          <img
-            src="../assets/imgs/expand.png"
-            alt="Fullscreen"
-            class="w-5 h-5"
-          />
-        </button>
-        <div class="flex gap-2 bg-[#273039] px-4 py-2 rounded-lg">
-          <button
-            v-for="size in [3, 4, 5]"
-            :key="size"
-            @click="setBoardSize(size)"
-            class="cursor-pointer"
-            :class="[
-              'px-3 py-1 rounded-md transition-colors',
-              boardSize === size
-                ? 'bg-[#21cfac] text-white'
-                : 'bg-gray-700 hover:bg-gray-600',
-            ]"
-          >
-            {{ size }}x{{ size }}
-          </button>
-        </div>
-        <button
-          @click="showAbout = true"
-          class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors cursor-pointer"
-        >
-          About
-        </button>
-        <button
-          @click="resetGame"
-          class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors cursor-pointer"
-        >
-          Reset
-        </button>
-      </div>
-    </header>
+    </div>
+    <div>
+      <h1 class="text-xl font-bold">Tic Tac Toe</h1>
+      <p class="text-sm font-bold text-[#cecece]">(XO) game</p>
+    </div>
+  </div>
+<div class="flex flex-col items-end">
+    <!-- زرار المينيو في الموبايل -->
+  <button
+    @click="isMenuOpen = !isMenuOpen"
+    class="md:hidden bg-gray-700 hover:bg-gray-600 p-3 rounded-md transition-colors"
+  >
+    <svg
+      v-if="!isMenuOpen"
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+    <svg
+      v-else
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  </button>
+  <!-- Controls -->
+  <nav
+    :class="[
+      isMenuOpen ? 'flex' : 'hidden md:flex',
+    ]"
+    class="flex flex-col md:flex-row items-end gap-3 md:gap-2 transition-all duration-300"
+  >
+    <button
+      @click="toggleFullscreen"
+      class="px-3 py-3 bg-gray-700 mt-3 hover:bg-gray-600 rounded-md transition-colors cursor-pointer"
+    >
+      <img src="../assets/imgs/expand.png" alt="Fullscreen" class="w-5 h-5" />
+    </button>
+    <!-- Board Size Buttons -->
+    <div class="flex gap-2 bg-[#273039] px-4 py-2 rounded-lg">
+      <button
+        v-for="size in [3, 4, 5]"
+        :key="size"
+        @click="setBoardSize(size)"
+        class="cursor-pointer"
+        :class="[
+          'px-3 py-1 rounded-md transition-colors',
+          boardSize === size
+            ? 'bg-[#21cfac] text-white'
+            : 'bg-gray-700 hover:bg-gray-600',
+        ]"
+      >
+        {{ size }}x{{ size }}
+      </button>
+    </div>
+    <button
+      @click="showAbout = true"
+      class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors cursor-pointer"
+    >
+      About
+    </button>
+    <button
+      @click="resetGame"
+      class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors cursor-pointer"
+    >
+      Reset
+    </button>
+  </nav>
+</div>
+</header>
 <!-- Scoreboard & Power-ups -->
 <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-8 mb-6 w-full px-2">
   <!-- Player 1 Power-ups -->
@@ -662,18 +706,30 @@
     <span>Designed & Developed by <a href="https://eweis.vercel.app/" class="text-cyan-400 font-semibold">Ahmed Eweis</a></span>
   </div>
 </footer>
+<footer class="mt-1 text-gray-300 py-4 px-6 text-center font-bold">
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 text-sm">
+    <span class="flex items-center gap-2">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
+        alt="Vue.js Logo"
+        class="w-5 h-5 sm:w-6 sm:h-6"
+      />
+      <span>Powered by <span class="text-[#42b883]">Vue.js</span></span>
+    </span>
+  </div>
+</footer>
 <!-- GitHub Box -->
 <a href="https://github.com/ahmedeweis" target="_blank"
-  class="fixed bottom-4 left-4 flex items-center gap-2 bg-[#313847] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[#3e4652] transition-all duration-300">
+  class="hidden md:flex fixed bottom-4 left-4 items-center gap-2 bg-[#313847] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[#3e4652] transition-all duration-300">
   <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
     alt="GitHub" class="w-5 h-5 invert brightness-0">
   <span class="font-medium text-sm">GitHub</span>
 </a>
 <!-- Portfolio Box -->
 <a href="https://falcon-core.vercel.app/" target="_blank"
-  class="fixed bottom-4 left-33 flex items-center gap-2 bg-[#313847] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[#3e4652] transition-all duration-300">
+  class="hidden md:flex fixed bottom-4 left-36 items-center gap-2 bg-[#313847] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[#3e4652] transition-all duration-300">
   <img src="../assets/imgs/brand_logo_transparent.png" alt="Portfolio"
-    class="w-5 h-5 ">
+    class="w-5 h-5">
   <span class="font-medium text-sm">Portfolio</span>
 </a>
 <a
@@ -706,6 +762,7 @@ const showAbout = ref(false);
 const currentPowerUp = ref(null);
 const selectedCell = ref(-1);
 const selectedCells = ref([]);
+const isMenuOpen = ref(false);
 // Power-ups
 const player1PowerUps = ref({ freeze: 1, bomb: 1, swap: 1 });
 const player2PowerUps = ref({ freeze: 1, bomb: 1, swap: 1 });
