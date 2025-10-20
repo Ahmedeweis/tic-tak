@@ -804,15 +804,14 @@ const checkWin = () => {
   }
   return -1; // Game ongoing
 };
-// Handle cell click
 const handleCellClick = (index) => {
   if (gameOver.value || board.value[index] !== '' || currentPowerUp.value !== null) return;
-  clickSound.play(); // 🔊 صوت الضغط
+  clickSound.play();
   board.value[index] = currentPlayer.value === 1 ? 'X' : 'O';
   const result = checkWin();
   if (result !== -1) {
-    if (result === 0) drawSound.play(); // تعادل
-    else winSound.play(); // فوز
+    if (result === 0) drawSound.play();
+    else winSound.play();
     gameOver.value = true;
     winner.value = result;
     if (result === 1) scores.value.p1++;
@@ -821,21 +820,17 @@ const handleCellClick = (index) => {
     return;
   }
 if (skipNextTurn.value) {
-  // الخصم يتخطى دوره
   skipNextTurn.value = false;
-  // نفس اللاعب يلعب تاني ✅
 } else {
   currentPlayer.value = currentPlayer.value === 1 ? 2 : 1;
 }
 };
-// Use power-up
 const usePowerUp = (powerUp) => {
   if (currentPowerUp.value !== null) return;
   const playerPowerUps = currentPlayer.value === 1 ? player1PowerUps : player2PowerUps;
   if (playerPowerUps[powerUp] <= 0) return;
   currentPowerUp.value = powerUp;
 };
-// Handle bomb target
 const handleBombTarget = (index) => {
   if (board.value[index] === '') return;
   selectedCell.value = index;
