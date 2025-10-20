@@ -676,6 +676,13 @@
     class="w-5 h-5 ">
   <span class="font-medium text-sm">Portfolio</span>
 </a>
+<a
+  @click="openWhatsAppChannel"
+  class="fixed bottom-4 right-4 flex items-center gap-2  text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[#3e4652] transition-all duration-300 cursor-pointer"
+>
+  <img src="../assets/imgs/telephone.png" alt="WhatsApp" class="w-14 h-14" />
+  <!-- <span class="font-medium text-sm">WhatsApp</span> -->
+</a>
   </div>
 </template>
 <script setup>
@@ -917,6 +924,15 @@ const toggleFullscreen = () => {
     }
   }
 };
+function openWhatsAppChannel() {
+  const now = Date.now();
+  window.location.href = "whatsapp://send?phone=201153161437";
+  setTimeout(() => {
+    if (Date.now() - now < 1500) {
+      window.location.href = "https://wa.me/201153161437";
+    }
+  }, 1000);
+}
 // Watch for power-up actions
 watch(currentPowerUp, (newVal) => {
   if (newVal === 'bomb') {
